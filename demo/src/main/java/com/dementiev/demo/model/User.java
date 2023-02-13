@@ -16,7 +16,6 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "username")
     private String username;
 
@@ -24,9 +23,6 @@ public class User implements UserDetails {
     private String lastName;
     @Column(name = "age")
     private int age;
-
-
-
     @Column(name = "email", unique = true)
     private String email;
 
@@ -57,12 +53,24 @@ public class User implements UserDetails {
         return getRoles();
     }
 
-    public String getPassword() {
-        return password;
+    public Long getId() {
+        return id;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getUsername() {
+        return email;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
     public int getAge() {
         return age;
@@ -73,8 +81,13 @@ public class User implements UserDetails {
     }
 
 
+    public String getPassword() {
+        return password;
+    }
 
-
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getEmail() {
         return email;
@@ -83,23 +96,9 @@ public class User implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return email;
-    }
-
     public List<Role> getRoles() {
         return roles;
     }
-
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
@@ -125,19 +124,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-
     @Override
     public String toString() {
         return "User{" +
@@ -147,6 +133,4 @@ public class User implements UserDetails {
                 ", email='" + email + '\'' +
                 '}';
     }
-
-
 }
