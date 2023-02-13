@@ -19,11 +19,11 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     private String lastName;
     @Column(name = "age")
     private int age;
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "password")
@@ -64,7 +64,7 @@ public class User implements UserDetails {
         this.username = username;
     }
     public String getUsername() {
-        return email;
+        return username;
     }
     public String getLastName() {
         return lastName;
