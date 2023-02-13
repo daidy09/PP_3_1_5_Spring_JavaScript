@@ -17,8 +17,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "username")
-    private String username;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "last_name")
     private String lastName;
@@ -30,6 +30,10 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "username")
+    private String username;
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id",
@@ -40,13 +44,14 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String lastName, int age, String email, String password, List<Role> roles) {
-        this.username = username;
+    public User(String name, String lastName, int age, String email, String password, List<Role> roles) {
+        this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.username= email;
     }
 
     @Override
@@ -61,11 +66,19 @@ public class User implements UserDetails {
     public void setId(Long id) {
         this.id = id;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String username) {
+        this.name = username;
     }
+    public String getName() {
+        return name;
+    }
+
+    public void setUsername(String email) {
+        this.username = email;
+    }
+    @Override
     public String getUsername() {
-        return username;
+        return email;
     }
     public String getLastName() {
         return lastName;
@@ -85,6 +98,8 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
+
+
 
     public void setPassword(String password) {
         this.password = password;
@@ -132,7 +147,7 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", username='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';

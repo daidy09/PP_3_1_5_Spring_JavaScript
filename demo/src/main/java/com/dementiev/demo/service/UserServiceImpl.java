@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public void saveUser(User user) {
-        user.setUsername(user.getUsername());
+        user.setName(user.getName());
         user.setPassword(PasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void editUser(Long id, User user) {
         User editedUser = getUserById(id);
-        editedUser.setUsername(user.getUsername());
+        editedUser.setName(user.getName());
         editedUser.setLastName(user.getLastName());
         editedUser.setAge(user.getAge());
         editedUser.setEmail(user.getEmail());

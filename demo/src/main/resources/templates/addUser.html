@@ -73,7 +73,7 @@
                 <form class="text text-center" th:action="@{/admin/add}" th:object="${user}" method="post">
                   <p>
                     <label th:for="username" class="form-label d-flex justify-content-center align-items-end mb-0">Fist name</label>
-                    <input type="text" name="username" th:id="username" th:value="${user.username}">
+                    <input type="text" name="username" th:id="username" th:value="${user.name}">
                   </p>
                   <p>
                     <label th:for="lastName" class="form-label d-flex justify-content-center align-items-end mb-0">Last name</label>
