@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -101,6 +102,9 @@ public class User implements UserDetails {
     }
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+    public String getRolesToString(){
+        return roles.stream().map(role -> role.getUserRole().replace("ROLE_", "")).collect(Collectors.joining(" "));
     }
 
 

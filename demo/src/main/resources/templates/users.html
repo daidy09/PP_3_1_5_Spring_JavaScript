@@ -17,7 +17,7 @@
     <a class="navbar-brand ">
       <span class="text-white font-weight-bold" th:text="${thisUser.getEmail()}"></span>
       <span class="text-white">  with roles: </span>
-      <span class="text-white" th:text="${thisUser.getRoles()}"></span>
+      <span class="text-white" th:text="${thisUser.getRolesToString()}"></span>
     </a>
     <form class="form-inline" th:action="@{/logout}" th:method="POST">
       <button class="btn  btn-sm text-secondary " type="submit">Logout</button>
@@ -82,7 +82,7 @@
               <td th:text="${user.getLastName()}">user</td>
               <td th:text="${user.getAge()}">user</td>
               <td th:text="${user.getEmail()}">user</td>
-              <td th:text="${user.getRoles()}">user</td>
+              <td th:text="${user.getRolesToString()}">user</td>
 
 
               <td>
