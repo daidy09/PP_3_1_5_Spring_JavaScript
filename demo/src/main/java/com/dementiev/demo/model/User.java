@@ -66,8 +66,8 @@ public class User implements UserDetails {
     public void setId(Long id) {
         this.id = id;
     }
-    public void setName(String username) {
-        this.name = username;
+    public void setName(String name) {
+        this.name = name;
     }
     public String getName() {
         return name;
