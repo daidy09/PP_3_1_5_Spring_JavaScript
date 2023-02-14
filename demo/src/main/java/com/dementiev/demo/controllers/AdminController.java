@@ -33,13 +33,13 @@ public class AdminController {
     public String userList(Model model, Principal principal) {
         User user = (User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
-        model.addAttribute("allUsers", userServiceImpl.getAllUsers());
+        model.addAttribute("users", userServiceImpl.getAllUsers());
         model.addAttribute("title", user);
         model.addAttribute("newUser", new User());
         model.addAttribute("rol", new Role());
         model.addAttribute("roleList", roleService.getAllRoles());
         model.addAttribute("thisUser", userServiceImpl.getByUsername(principal.getName()));
-        return "users";
+        return "admin";
     }
 
 //    @GetMapping(value = "/add")
