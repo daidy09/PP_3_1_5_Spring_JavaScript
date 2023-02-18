@@ -3,6 +3,7 @@ package com.dementiev.demo.service;
 import com.dementiev.demo.model.User;
 import com.dementiev.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -66,5 +67,9 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("User is not found yet:" + " " + username);
         }
         return user;
+    }
+    @Override
+    public User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
