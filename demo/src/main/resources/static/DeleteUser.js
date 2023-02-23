@@ -17,7 +17,7 @@ async function deleteModalData(id) {
 function deleteUser() {
     formDelete .addEventListener("submit", ev => {
         ev.preventDefault();
-        fetch("http://localhost:8081/admin/users/" + formDelete .id.value, {
+        fetch("http://localhost:8080/api/admins/users/" + formDelete.id.value, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

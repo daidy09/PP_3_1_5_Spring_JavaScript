@@ -11,7 +11,7 @@ function addUser() {
                 name: "ROLE_" + formNew.roles.options[i].text
             });
         }
-        fetch("http://localhost:8081/admin/users", {
+        fetch("http://localhost:8080/api/admins/newAddUser", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ function addUser() {
                 name: formNew.name.value,
                 lastName: formNew.lastName.value,
                 age: formNew.age.value,
-                login: formNew.login.value,
+                email: formNew.email.value,
                 password: formNew.password.value,
                 roles: newUserRoles
             })

@@ -16,7 +16,7 @@ function editUser() {
                 name: "ROLE_" + formEdit.roles.options[i].text
             });
         }
-        fetch("http://localhost:8081/admin/users/" + formEdit.id.value, {
+        fetch("http://localhost:8080/api/admins/users/" + formEdit.id.value, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ function editUser() {
                 name: formEdit.name.value,
                 lastName: formEdit.lastName.value,
                 age: formEdit.age.value,
-                login: formEdit.login.value,
+                email: formEdit.email.value,
                 password: formEdit.password.value,
                 roles: editUserRoles
             })
