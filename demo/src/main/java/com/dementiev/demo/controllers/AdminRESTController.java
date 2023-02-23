@@ -40,9 +40,7 @@ public class AdminRESTController {
     }
 
     @PostMapping("/newAddUser")
-    public ResponseEntity<HttpStatus> saveNewUser(
-            @RequestBody User user
-    ) {
+    public ResponseEntity<HttpStatus> saveNewUser( @RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
         return new ResponseEntity<> (HttpStatus.OK);
