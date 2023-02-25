@@ -1,30 +1,44 @@
-let formDelete = document.forms["formDeleteUser"];
-deleteUser();
+
+const id_del = document.getElementById('idDelete');
+const name_del = document.getElementById('nameDelete');
+const lastname_del = document.getElementById('lastNameDelete');
+const age_del = document.getElementById('ageDelete');
+const email_del = document.getElementById('emailDelete');
+const role_del = document.getElementById("rolesDelete")
+const deleteModal = document.getElementById("deleteModal");
+const closeDeleteButton = document.getElementById("deleteFormCloseButton")
+const bsDeleteModal = new bootstrap.Modal(deleteModal);
 
 async function deleteModalData(id) {
-    const modal = new bootstrap.Modal(document.querySelector('#deleteModal'));
-    await openAndFillInTheModal(formDelete, modal, id);
-    switch (formDelete.roles.value) {
-        case '1':
-            formDelete.roles.value = 'ADMIN';
-            break;
-        case '2':
-            formDelete.roles.value = 'USER';
-            break;
+    const  urlForDel = 'api/admins/users/' + id;
+    let usersPageDel = await fetch(urlForDel);
+    if (usersPageDel.ok) {
+        let userData =
+            await usersPageDel.json().then(user => {
+                id_del.value = `${user.id}`;
+                name_del.value = `${user.name}`;
+                lastname_del.value = `${user.lastName}`;
+                age_del.value = `${user.age}`;
+                email_del.value = `${user.email}`;
+                role_del.value = user.roles.map(r=>r.userRole).join(", ");
+            })
+
+        bsDeleteModal.show();
+    } else {
+        alert(`Error, ${usersPageDel.status}`)
     }
 }
+async function deleteUser() {
+    let urlDel = 'api/admins/users/' + id_del.value;
+    let method = {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
 
-function deleteUser() {
-    formDelete .addEventListener("submit", ev => {
-        ev.preventDefault();
-        fetch("http://localhost:8080/api/admins/users/" + formDelete.id.value, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(() => {
-            $('#deleteFormCloseButton').click();
-            findAll();
-        });
-    });
+    fetch(urlDel, method).then(() => {
+        closeDeleteButton.click();
+        findAll();
+    })
 }

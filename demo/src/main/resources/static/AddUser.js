@@ -1,16 +1,17 @@
-let formNew = document.forms["formNewUser"];
+let formNew = document.forms["formNewUser"]
+const role_new = document.querySelector('#rolesNew').selectedOptions;
 addUser();
 
 function addUser() {
     formNew.addEventListener("submit", ev => {
         ev.preventDefault();
-        let newUserRoles = [];
-        for (let i = 0; i < formNew.roles.options.length; i++) {
-            if (formNew.roles.options[i].selected) newUserRoles.push({
-                id: formNew.roles.value,
-                name: "ROLE_" + formNew.roles.options[i].text
+        let listOfRole = [];
+        for (let i = 0; i < role_new.length; i++) {
+            listOfRole.push({
+                id: role_new[i].value
             });
         }
+
         fetch("http://localhost:8080/api/admins/newAddUser", {
             method: 'POST',
             headers: {
@@ -23,7 +24,7 @@ function addUser() {
                 age: formNew.age.value,
                 email: formNew.email.value,
                 password: formNew.password.value,
-                roles: newUserRoles
+                roles: listOfRole
             })
         }).then(() => {
             formNew.reset();

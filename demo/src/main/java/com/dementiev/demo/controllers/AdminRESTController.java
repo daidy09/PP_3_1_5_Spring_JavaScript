@@ -41,14 +41,14 @@ public class AdminRESTController {
 
     @PostMapping("/newAddUser")
     public ResponseEntity<HttpStatus> saveNewUser( @RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+       // user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
         return new ResponseEntity<> (HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id) {
-        userService.getUserById(id);
+        userService.deleteUser(id);
         return new ResponseEntity<> (HttpStatus.OK);
     }
 
