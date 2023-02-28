@@ -38,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void editRole(Role role) {
-        role.setId(role.getId());
+//        role.setId(role.getId());
         roleRepository.save(role);
     }
 }

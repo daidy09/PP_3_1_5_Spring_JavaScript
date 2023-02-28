@@ -12,7 +12,7 @@ function fillInPrincipal() {
                     <td>${data.id}</td>
                     <td>${data.name}</td>
                     <td>${data.lastName}</td>
-                    <td>${data.age}</td>   
+                    <td>${data.age}</td>
                     <td>${data.email}</td>
                     <td>${roles}</td>
                 </tr>)`;

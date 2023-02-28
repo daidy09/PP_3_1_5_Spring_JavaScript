@@ -23,6 +23,7 @@ function addUser() {
                 lastName: formNew.lastName.value,
                 age: formNew.age.value,
                 email: formNew.email.value,
+                username: formNew.email.value,
                 password: formNew.password.value,
                 roles: listOfRole
             })

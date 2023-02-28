@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -34,17 +35,16 @@ public class User implements UserDetails {
     private String username;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id",
-            referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(
-            name = "roles_id", referencedColumnName = "id"))
-    private List <Role> roles = new ArrayList<>();
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private Set<Role> roles;
 
     public User() {
     }
 
-    public User(String name, String lastName, int age, String email, String password, List<Role> roles) {
+    public User(String name, String lastName, int age, String email, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
@@ -100,7 +100,6 @@ public class User implements UserDetails {
     }
 
 
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -112,10 +111,10 @@ public class User implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
     public String getRolesToString(){

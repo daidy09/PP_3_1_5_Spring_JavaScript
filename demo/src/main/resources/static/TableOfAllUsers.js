@@ -18,7 +18,7 @@ function findAll() {
                             <td>
                                 <button type="button" class="btn btn-info"
                                 data-bs-toogle="modal"
-                                data-bs-target="#editModal"
+                                data-bs-target="#edit_Modal"
                                 onclick="editModalData(${user.id})">Edit</button>
                             </td>
                             <td>

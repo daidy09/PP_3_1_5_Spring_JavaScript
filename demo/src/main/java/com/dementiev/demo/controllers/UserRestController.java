@@ -23,8 +23,8 @@ public class UserRestController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<User> showAuthUser() {
-        return new ResponseEntity<> (userServiceImpl.getCurrentUser(), HttpStatus.OK);
-    }
+//    @GetMapping("/user")
+//    public ResponseEntity<User> showAuthUser() {
+//        return new ResponseEntity<> (userServiceImpl.getCurrentUser(), HttpStatus.OK);
+//    }
 }

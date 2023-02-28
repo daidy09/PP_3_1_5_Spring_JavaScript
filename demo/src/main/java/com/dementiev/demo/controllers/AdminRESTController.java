@@ -1,7 +1,8 @@
 package com.dementiev.demo.controllers;
 
+import com.dementiev.demo.model.Role;
 import com.dementiev.demo.model.User;
-import com.dementiev.demo.service.UserService;
+import com.dementiev.demo.service.RoleServiceImpl;
 import com.dementiev.demo.service.UserServiceImpl;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,32 +15,34 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/admins")
+@RequestMapping("rest/")
 public class AdminRESTController {
     private final UserServiceImpl userService;
+    private final RoleServiceImpl roleService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminRESTController(UserServiceImpl userService, BCryptPasswordEncoder passwordEncoder) {
+    public AdminRESTController(UserServiceImpl userService, RoleServiceImpl roleService, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
-    @GetMapping
+    @GetMapping("/users")
     public ResponseEntity<List<User>> showUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<User> showUser(@PathVariable("id") Long id) {
-        return new ResponseEntity<> (userService.getUserById(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/userAuth")
-    public ResponseEntity<User> showAuthUser() {
+    @GetMapping("/user")
+    public ResponseEntity<User> showUser() {
         return new ResponseEntity<> (userService.getCurrentUser(), HttpStatus.OK);
     }
+//
+//    @GetMapping("/userAuth")
+//    public ResponseEntity<User> showAuthUser() {
+//        return new ResponseEntity<> (userService.getCurrentUser(), HttpStatus.OK);
+//    }
 
-    @PostMapping("/newAddUser")
+    @PostMapping("/users")
     public ResponseEntity<HttpStatus> saveNewUser( @RequestBody User user) {
        // user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
@@ -55,11 +58,16 @@ public class AdminRESTController {
 
     @PatchMapping("/users/{id}")
     public ResponseEntity<HttpStatus> userSaveEdit(@RequestBody @NotNull User user, @PathVariable Long id) {
-        user.setId(id);
-        System.out.println(user);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setId(id);
+//        System.out.println(user);
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.editUser(id, user);
 
         return new ResponseEntity<> (HttpStatus.OK);
+    }
+
+    @GetMapping("/roles")
+    public ResponseEntity<List<Role>> getAllRoles() {
+        return new ResponseEntity<>(roleService.getAllRoles(), HttpStatus.OK);
     }
 }

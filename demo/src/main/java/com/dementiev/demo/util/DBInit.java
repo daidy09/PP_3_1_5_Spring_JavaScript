@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class DBInit {
@@ -26,8 +28,8 @@ public class DBInit {
     private void dataBaseInit() {
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleUser = new Role("ROLE_USER");
-        List<Role> adminSet = new ArrayList<>();
-        List<Role> userSet = new ArrayList<>();
+        Set<Role> adminSet = new HashSet<>();
+        Set<Role> userSet = new HashSet<>();
 
         roleService.addRole(roleAdmin);
         roleService.addRole(roleUser);

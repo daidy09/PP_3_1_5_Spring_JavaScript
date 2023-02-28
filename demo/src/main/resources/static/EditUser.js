@@ -2,7 +2,7 @@ let formEdit = document.forms["formEditUser"];
 editUser();
 
 async function editModalData(id) {
-    const modal = new bootstrap.Modal(document.querySelector('#editModal'));
+    const modal = new bootstrap.Modal(document.querySelector('#edit_Modal'));
     await openAndFillInTheModal(formEdit, modal, id);
 }
 
@@ -11,9 +11,9 @@ function editUser() {
         ev.preventDefault();
         let editUserRoles = [];
         for (let i = 0; i < formEdit.roles.options.length; i++) {
-            if (formEdit.roles.options[i].selected) editUserRoles.push({
-                id: formEdit.roles.value,
-                name: "ROLE_" + formEdit.roles.options[i].text
+            editUserRoles.push({
+                id: formEdit.roles.options.value,
+                roles: "ROLE_" + formEdit.roles.options[i].text
             });
         }
         fetch("http://localhost:8080/api/admins/users/" + formEdit.id.value, {
@@ -27,6 +27,7 @@ function editUser() {
                 lastName: formEdit.lastName.value,
                 age: formEdit.age.value,
                 email: formEdit.email.value,
+                username: formEdit.email.value,
                 password: formEdit.password.value,
                 roles: editUserRoles
             })
@@ -37,6 +38,4 @@ function editUser() {
     });
 }
 
-
-
-
+// ==================================================
