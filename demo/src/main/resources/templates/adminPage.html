@@ -82,57 +82,47 @@
                     </div>
 <!--                    Новый пользователь-->
                     <div class="tab-pane fade" id="newUser" role="tabpanel" aria-labelledby="new-user-tab">
-                        <div class="container d-flex flex-column justify-content-center align-items-center w-100 ">
+<!--                        <div class="container d-flex flex-column justify-content-center align-items-center w-100 ">-->
                             <div class="row col-sm-10 text-center">
                                 <h4>Add new user</h4>
                             </div>
-                            <form id="formNewUser">
-<!--                                <div class="mb-3">-->
-<!--                                    <label for="idNew" class="col-form-label">ID</label>-->
-<!--                                    <input type="text" name = "id"-->
-<!--                                           class="form-control" id="idNew" readonly/>-->
-<!--                                </div>-->
-                                <div class="mb-3">
-                                    <label for="nameNew" class="col-form-label">Name</label>
-                                    <input type="text" name = "name"
-                                           class="form-control" id="nameNew"/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lastNameNew" class="col-form-label">Lastname</label>
-                                    <input type="text" name = "lastName"
-                                           class="form-control" id="lastNameNew"/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ageNew" class="col-form-label">Age</label>
-                                    <input type="number" name = "age"
-                                           class="form-control" id="ageNew"/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="emailNew" class="col-form-label">Email</label>
-                                    <input type="text" name = "email"
-                                           class="form-control" id="emailNew"/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="passNew" class="col-form-label">Password</label>
-                                    <input type="password" name = "password"
-                                           class="form-control" id="passNew"/>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="container-fluid " for="rolesNew">Role</label>
-                                    <select id="rolesNew" class="form-select col-md-5"
-                                            name="roles" multiple="" size="2" >
-                                        <option value="1">ADMIN</option>
-                                        <option value="2">USER</option>
-                                    </select>
-                                </div>
-                                <div class="d-grid col-6 mx-auto">
-                                    <input type="submit" class="btn btn-success" value="Add new user"/>
-                                </div>
-<!--                                <button id="addUserBtn" type="submit" class="btn btn-success btn-lg">Add new-->
-<!--                                    user-->
-<!--                                </button>-->
-                            </form>
-                        </div>
+                            <form class="text-center" role="form"  id="formForNewUser">
+                            <div class="container col-md-6">
+                                <label class="row font-weight-bold justify-content-center" for="name">Name</label>
+                                <input name="name" th:type="text" class="form-control" id="name" placeholder="Name"/>
+                            </div>
+                            <div class="container col-md-6">
+                                <label class="row font-weight-bold justify-content-center" for="lastname">Last name</label>
+                                <input name="lastname" th:type="text" class="form-control" id="lastname" placeholder="Last name"/>
+                            </div>
+                            <div class="container col-md-6">
+                                <label class="row font-weight-bold justify-content-center" for="age">Age</label>
+                                <input name="age" th:type="number" class="form-control"  id="age" placeholder="Age"/>
+                            </div>
+                            <div class="container col-md-6">
+                                <label class="row font-weight-bold justify-content-center" for="email">Email</label>
+                                <input name="email" th:type="text" class="form-control" id="email" placeholder="Email"/>
+                            </div>
+                            <div class="container col-md-6">
+                                <label class="row font-weight-bold justify-content-center" for="password">Password</label>
+                                <input name="password" th:type="text" class="form-control" id="password" placeholder="Password"/>
+                            </div>
+                            <div class="container col-md-6">
+                                <label class="row font-weight-bold justify-content-center" for="roles">Role</label>
+                                <select multiple class="form-control" size="2"  id="roles" name="roles">
+
+                                    <option id="roleNewUser" value="USER">USER</option>
+                                    <option id="roleNewAdmin" value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <br>
+
+                            <div class="container text-center col-md-6">
+                                <button type="submit" class="btn btn-success btn-lg" id="signup-submit"
+                                        form="formForNewUser" onclick="newUser()">Add new user</button>
+                            </div>
+                        </form>
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -166,64 +156,61 @@
 </div>
 <!--Модальные окна-->
 <!--EditModal-->
-<div class="modal fade"  id="edit_Modal" tabindex="-1"
-     aria-labelledby="editLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade"  id ="editModal">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="editLabel">Edit user</h1>
-                <button type="button" class="btn-close"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="exampleModalCenteredLabel">Edit user</h5>
+                <span class="btn-close" data-bs-dismiss="modal"
+                      aria-label="Close"></span>
             </div>
-            <form id="formEditUser">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="idEdit" class="col-form-label">ID</label>
-                        <input type="text" name = "id"
-                               class="form-control" id="idEdit" readonly/>
+
+            <div class="modal-body">
+
+                <!-- Начало Тело Модальной-->
+                <form id="formForEditing">
+                    <div class="form-group">
+                        <label class="row font-weight-bold justify-content-center" for="id_ed">ID </label>
+                        <input name="id" th:type="text" class="form-control"  id="id_ed" readonly/>
                     </div>
-                    <div class="mb-3">
-                        <label for="nameEdit" class="col-form-label">Name</label>
-                        <input type="text" name = "name"
-                               class="form-control" id="nameEdit"
-                               required minlength="2" maxlength="20"/>
+                    <div class="form-group">
+                        <label class="row font-weight-bold justify-content-center" for="name_ed">Name </label>
+                        <input name="name" th:type="text" class="form-control"  id="name_ed"/>
                     </div>
-                    <div class="mb-3">
-                        <label for="lastNameEdit" class="col-form-label">Lastname</label>
-                        <input type="text" name = "lastName"
-                               class="form-control" id="lastNameEdit"/>
+                    <div class="form-group">
+                        <label class="row font-weight-bold justify-content-center" for="lastname_ed">Last name</label>
+                        <input name="lastname" th:type="text" class="form-control" id="lastname_ed"/>
                     </div>
-                    <div class="mb-3">
-                        <label for="ageEdit" class="col-form-label">Age</label>
-                        <input type="number" name = "age"
-                               class="form-control" id="ageEdit"/>
+                    <div class="form-group">
+                        <label class="row font-weight-bold justify-content-center" for="age_ed">Age</label>
+                        <input name="age" th:type="number" class="form-control" id="age_ed"/>
                     </div>
-                    <div class="mb-3">
-                        <label for="emailEdit" class="col-form-label">Email</label>
-                        <input type="text" name = "email"
-                               class="form-control" id="emailEdit" />
+                    <div class="form-group">
+                        <label class="row font-weight-bold justify-content-center" for="email_ed">Email</label>
+                        <input name="email" th:type="text" class="form-control"  id="email_ed"/>
                     </div>
-                    <div class="mb-3">
-                        <label for="passEdit" class="col-form-label">Password</label>
-                        <input type="password" name = "password"
-                               class="form-control" id="passEdit"/>
+                    <div class="form-group">
+                        <label class="row font-weight-bold justify-content-center" for="password_ed">Password</label>
+                        <input name="password" th:type="text" class="form-control" id="password_ed"/>
                     </div>
-                    <div class="mb-3">
-                        <label class="container-fluid " for="rolesEdit">Role</label>
-                        <select id="rolesEdit" class="form-select col-md-5"
-                                name="roles" multiple="" size="2" >
-                            <option id="roleUser" value="ADMIN">ADMIN</option>
-                            <option id="roleAdmin" value="2">USER</option>
-                        </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                            id="editFormCloseButton"
-                            data-bs-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-info" value="Edit"/>
-                </div>
-                </div>
-            </form>
+
+                    <label class="row font-weight-bold justify-content-center" for="rolesForEditing">Role</label>
+                    <select multiple class="form-control" size="2"  id="rolesForEditing" name="rolesForEditing">
+                        <option id="roleUser" value="USER">USER</option>
+                        <option id="roleAdmin" value="ADMIN">ADMIN</option>
+                    </select>
+
+                    <!-- Конец тела окна-->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="editCloseBtn"
+                        >Close</button>
+                        <button type="button" class="btn btn-primary" id="editBtn"
+                                onclick="editUser(); getAdminPage()">Edit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -276,11 +263,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                            id="deleteFormCloseButton"
-                            data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="deleteBtn"
-                            onclick="deleteUser()">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="deleteCloseBtn"
+                    >Close</button>
+                    <button type="submit" class="btn btn-primary" id="deleteBtn"
+                            onclick="deleteUser(); getAdminPage()">Delete</button>
                 </div>
             </form>
         </div>
@@ -305,8 +291,11 @@
 <!--<script type="text/javascript" th:src="@{/OpenAndFillInTheModal.js}"></script>-->
 <!--<script type="text/javascript" th:src="@{/PrincipalInfo.js}"></script>-->
 <!--<script type="text/javascript" th:src="@{/TableOfAllUsers.js}"></script>-->
-<script type="text/javascript" th:src="@{/admin.js}"></script>
-<script type="text/javascript" th:src="@{/user.js}"></script>
+<script  th:src="@{/adminPage.js}"></script>
+<script  th:src="@{/user.js}"></script>
+<script  th:src="@{/deleteModalPage.js}"></script>
+<script  th:src="@{/newUserPage.js}"></script>
+<script  th:src="@{/editModalPage.js}"></script>
 
 
 </body>
