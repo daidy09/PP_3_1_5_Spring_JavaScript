@@ -36,15 +36,17 @@ public class AdminRESTController {
     public ResponseEntity<User> showUser() {
         return new ResponseEntity<> (userService.getCurrentUser(), HttpStatus.OK);
     }
-//
-//    @GetMapping("/userAuth")
-//    public ResponseEntity<User> showAuthUser() {
-//        return new ResponseEntity<> (userService.getCurrentUser(), HttpStatus.OK);
-//    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> showUser(@PathVariable("id") Long id) {
+        User user = userService.getUserById(id);
+        return new ResponseEntity<> (user, HttpStatus.OK);
+    }
 
     @PostMapping("/users")
     public ResponseEntity<HttpStatus> saveNewUser( @RequestBody User user) {
        // user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.getRoles();
         userService.saveUser(user);
         return new ResponseEntity<> (HttpStatus.OK);
     }
@@ -58,16 +60,16 @@ public class AdminRESTController {
 
     @PatchMapping("/users/{id}")
     public ResponseEntity<HttpStatus> userSaveEdit(@RequestBody @NotNull User user, @PathVariable Long id) {
-//        user.setId(id);
+        user.setId(id);
 //        System.out.println(user);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.editUser(id, user);
 
         return new ResponseEntity<> (HttpStatus.OK);
     }
 
-    @GetMapping("/roles")
-    public ResponseEntity<List<Role>> getAllRoles() {
-        return new ResponseEntity<>(roleService.getAllRoles(), HttpStatus.OK);
-    }
+//    @GetMapping("/roles")
+//    public ResponseEntity<List<Role>> getAllRoles() {
+//        return new ResponseEntity<>(roleService.getAllRoles(), HttpStatus.OK);
+//    }
 }

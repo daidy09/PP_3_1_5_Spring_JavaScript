@@ -1,22 +1,22 @@
 const form_ed = document.getElementById('formForEditing');
 const id_ed = document.getElementById('id_ed');
 const name_ed = document.getElementById('name_ed');
-const lastname_ed = document.getElementById('lastname_ed');
+const lastName_ed = document.getElementById('lastname_ed');
 const age_ed = document.getElementById('age_ed');
 const email_ed = document.getElementById('email_ed');
 const password_ed = document.getElementById('password_ed');
 
 
-async function editModalData(id_ed) {
+async function editModalData(id) {
     $('#editModal').modal('show');
-    const  urlDataEd = 'rest/users/' + id_ed;
+    const  urlDataEd = 'rest/users/' + id;
     let usersPageEd = await fetch(urlDataEd);
     if (usersPageEd.ok) {
         let userData =
             await usersPageEd.json().then(user => {
                 id_ed.value = `${user.id}`;
                 name_ed.value = `${user.name}`;
-                lastname_ed.value = `${user.lastname}`;
+                lastName_ed.value = `${user.lastName}`;
                 age_ed.value = `${user.age}`;
                 email_ed.value = `${user.email}`;
                 password_ed.value = `${user.password}`;
