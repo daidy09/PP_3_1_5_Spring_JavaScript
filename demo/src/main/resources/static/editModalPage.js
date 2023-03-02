@@ -40,7 +40,7 @@ async function editUser() {
         },
         body: JSON.stringify({
             name: form_ed.name.value,
-            lastname: form_ed.lastname.value,
+            lastName: form_ed.lastname.value,
             age: form_ed.age.value,
             email: form_ed.email.value,
             password: form_ed.password.value,
