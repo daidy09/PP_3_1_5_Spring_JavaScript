@@ -3,74 +3,90 @@ package com.dementiev.demo.service;
 import com.dementiev.demo.model.User;
 import com.dementiev.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
+@Transactional
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
+
     private final UserRepository userRepository;
-    BCryptPasswordEncoder PasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder PasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userRepository = userRepository;
-        this.PasswordEncoder = PasswordEncoder;
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
+
     }
 
     @Override
-    public User getByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    public List<User> getAllUsers() {
+    public List<User> allUsers() {
         return userRepository.findAll();
     }
 
-    @Transactional
-    public void saveUser(User user) {
-        user.setName(user.getName());
-        user.setRoles(user.getRoles());
-        user.setPassword(PasswordEncoder.encode(user.getPassword()));
+    @Override
+    public void add(User user, String[] newRoles) {
+        for (String role : newRoles) {
+            user.setOneRole(roleService.getRoleByRole(role));
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
     }
 
-    @Transactional
-    public void deleteUser(Long id) {
+    @Override
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
+    @Override
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    @Transactional
-    public void editUser(Long id, User user) {
-        User editedUser = getUserById(id);
-        editedUser.setName(user.getName());
-        editedUser.setLastName(user.getLastName());
-        editedUser.setAge(user.getAge());
-        editedUser.setEmail(user.getEmail());
-        editedUser.setPassword(user.getPassword());
-        editedUser.setRoles(user.getRoles());
-        userRepository.save(editedUser);
+    @Override
+    public void update(User user, String [] editRoles) {
+        String passwordFromForm = user.getPassword();
+        String encodedPasswordFromBase = userRepository.getById(user.getId()).getPassword();
+        if (passwordFromForm.equals(encodedPasswordFromBase)) {
+            user.setPassword(encodedPasswordFromBase);
+        } else {
+            if (passwordEncoder.matches(passwordFromForm, encodedPasswordFromBase)) {
+                user.setPassword(encodedPasswordFromBase);
+            } else {
+                user.setPassword(passwordEncoder.encode(passwordFromForm));
+            }
+        }
+        for (String role : editRoles) {
+            user.setOneRole(roleService.getRoleByRole(role));
+        }
+        userRepository.save(user);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public User findUserByFirstName(String firstName) {
+        return userRepository.findUserByFirstName(firstName);
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String firstName) throws UsernameNotFoundException {
+        UserDetails user = userRepository.findUserByFirstName(firstName);
         if (user == null) {
-            throw new UsernameNotFoundException("User is not found yet:" + " " + username);
+            throw new UsernameNotFoundException("Couldn't find user by this name");
         }
         return user;
     }
-    @Override
-    public User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
 }
+

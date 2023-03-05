@@ -1,21 +1,24 @@
 package com.dementiev.demo.service;
 
+
 import com.dementiev.demo.model.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
-    void saveUser(User user);
+public interface UserService {
+    List<User> allUsers();
 
-    void editUser(Long id, User user);
 
-    void deleteUser(Long id);
 
-    List<User> getAllUsers();
+    void add(User user, String [] newRoles);
 
-    User getByUsername(String login);
+    void delete(Long id);
 
     User getUserById(Long id);
-    User getCurrentUser();
+
+    void update(User user, String [] editRoles);
+
+    User findUserByFirstName(String name);
+
 }
+

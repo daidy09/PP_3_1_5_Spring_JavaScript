@@ -1,36 +1,19 @@
 package com.dementiev.demo.controllers;
 
-import com.dementiev.demo.service.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.dementiev.demo.model.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
-    private UserServiceImpl userServiceImpl;
 
-    @Autowired
-    public UserController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
-    }
-
-    @GetMapping("user")
-    public String oneUser(Model model, Principal principal) {
-        model.addAttribute("oneUser", userServiceImpl.getByUsername(principal.getName()));
-        return "oneUserPage2";
-    }
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            request.getSession().invalidate();
-        }
-        return "redirect:/login";
+    @GetMapping
+    public String getUserInfo(@AuthenticationPrincipal User user, Model model){
+        model.addAttribute("user", user);
+        return "user";
     }
 }

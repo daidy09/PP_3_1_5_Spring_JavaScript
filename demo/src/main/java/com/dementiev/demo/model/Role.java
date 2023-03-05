@@ -3,38 +3,11 @@ package com.dementiev.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
-@Table(name="roles")
+@Table (name="role_table")
 public class Role implements GrantedAuthority {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-    @Column(name = "role")
-    private String userRole;
 
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
-
-    public Role() {
-    }
-
-    public Role(Long id) {
-        this.id = id;
-    }
-
-    public Role(Long id, String userRole) {
-        this.id = id;
-        this.userRole = userRole;
-    }
-
-    public Role(String userRole) {
-        this.userRole = userRole;
-    }
 
     public Long getId() {
         return id;
@@ -44,22 +17,35 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getUserRole() {
-        return userRole.replace("ROLE_", "");
+    public String getRole() {
+        return role;
     }
 
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
+    public void setRole(String name) {
+        this.role = role;
+    }
+
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
+    private String role;
+
+    public Role (){}
+
+    public Role (String role){
+        this.role=role;
+    }
+
+    public Role (Long id, String role){
+        this.id = id;
+        this.role = role;
     }
 
     @Override
     public String getAuthority() {
-        return userRole;
+        return getRole();
     }
-
-    @Override
-    public String toString() {
-        return userRole;
-    }
-
 }

@@ -1,22 +1,13 @@
-fetch('/rest/user').then(
-    res => {
-        res.json().then(
-            data => {
-                    $('#headerUserName').append(data.username);
-                    let roles = data.roles.map(role => " " + role.userRole);
-                    $('#headerRole').append(roles);
-                    let user = `$(
-                <tr>
-                    <td>${data.id}</td>
-                    <td>${data.name}</td>
-                    <td>${data.lastName}</td>
-                    <td>${data.age}</td>
-                    <td>${data.email}</td>
-                    <td>${roles}</td>
-                </tr>)`;
-                    $('#userTable').append(user);
-            }
-        )
-    }
-)
-
+const url = 'http://localhost:8080/user/logIn'
+let userAuth = document.querySelector('#userInfo')
+fetch(url)
+    .then(res => res.json())
+    .then(user => {
+        userAuth.innerHTML =
+            `<td>${user.id}</td>
+        <td>${user.firstName}</td>
+        <td>${user.lastName}</td>
+        <td>${user.age}</td>
+        <td>${user.email}</td>
+        <td>${user.roles.map (a => a.role)}</td>`
+    })
