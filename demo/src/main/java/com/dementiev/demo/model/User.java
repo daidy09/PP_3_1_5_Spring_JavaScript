@@ -17,15 +17,20 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "firstname")
     private String firstName;
 
-    @Column
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column
+    @Column(name = "age")
     private int age;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
+    private String password;
     public String getEmail() {
         return email;
     }
@@ -34,17 +39,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    @Column
-    private String email;
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Column
-    private String password;
-
-    public Set<Role> getRoles() {
+     public Set<Role> getRoles() {
         return roles;
     }
 

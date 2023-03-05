@@ -5,7 +5,7 @@ function getUsersTable() {
         .then(data => {
             data.forEach(function (user) {
                 let row = document.querySelector('#usersTable').insertRow();
-                row.setAttribute("id", user.id);
+                // row.setAttribute("id", user.id);
                 row.innerHTML = `
     <td>${user.id}</td>
     <td>${user.firstName}</td>
@@ -13,8 +13,8 @@ function getUsersTable() {
     <td>${user.age}</td>
     <td>${user.email}</td>
     <td>${user.roles.map(a => a.role)}</td>
-    <td><button type="button" style="background-color: #48b0a5" onclick="getEditModal(${user.id})" class="btn btn-info">Edit</button></td>
-    <td><button type="button" style="background-color: #de182f" onclick="getDeleteModal(${user.id})" class="btn btn-danger">Delete</button></td>
+    <td><button type="button"  onclick="getEditModal(${user.id})" class="btn btn-info">Edit</button></td>
+    <td><button type="button"  onclick="getDeleteModal(${user.id})" class="btn btn-danger">Delete</button></td>
 `
             })
         })
